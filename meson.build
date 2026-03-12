@@ -72,7 +72,7 @@ racing_sound_engine_dep = declare_dependency(
 
 # Demo executable
 if get_option('build_demo')
-  executable('engin-sound-demo',
+  executable('racing-sound-engine-demo',
     'src/main.cpp',
     dependencies : racing_sound_engine_dep,
   )
