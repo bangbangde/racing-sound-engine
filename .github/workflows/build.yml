@@ -1,0 +1,115 @@
+name: Build
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Meson and Ninja
+        run: pip install meson ninja
+
+      - name: Configure
+        run: meson setup build --buildtype=release
+
+      - name: Compile
+        run: meson compile -C build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: racing-sound-engine-windows
+          path: build/racing-sound-engine-demo.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Meson and Ninja
+        run: pip install meson ninja
+
+      - name: Configure
+        run: meson setup build --buildtype=release
+
+      - name: Compile
+        run: meson compile -C build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: racing-sound-engine-macos
+          path: build/racing-sound-engine-demo
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libpulse-dev
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Meson and Ninja
+        run: pip install meson ninja
+
+      - name: Configure
+        run: meson setup build --buildtype=release
+
+      - name: Compile
+        run: meson compile -C build
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: racing-sound-engine-linux
+          path: build/racing-sound-engine-demo
+
+  release:
+    needs: [build-windows, build-macos, build-linux]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Rename artifacts
+        run: |
+          mv racing-sound-engine-windows/racing-sound-engine-demo.exe racing-sound-engine-windows.exe
+          mv racing-sound-engine-macos/racing-sound-engine-demo racing-sound-engine-macos
+          mv racing-sound-engine-linux/racing-sound-engine-demo racing-sound-engine-linux
+          chmod +x racing-sound-engine-macos racing-sound-engine-linux
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            racing-sound-engine-windows.exe
+            racing-sound-engine-macos
+            racing-sound-engine-linux
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
