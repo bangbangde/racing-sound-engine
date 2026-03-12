@@ -32,8 +32,18 @@ const EnginePreset& get_preset_i4() {
         }
 
         // I4 tends to be raspier
-        p.exhaust_resonance_freq = 250.0f;
-        p.exhaust_resonance_Q    = 1.8f;
+        p.exhaust_resonance_freqs[0] = 250.0f;
+        p.exhaust_resonance_Qs[0]    = 3.5f;
+        p.exhaust_resonance_gains_db[0] = 10.0f;
+        p.exhaust_resonance_freqs[1] = 600.0f;
+        p.exhaust_resonance_Qs[1]    = 2.5f;
+        p.exhaust_resonance_gains_db[1] = 6.0f;
+        p.exhaust_resonance_freqs[2] = 1000.0f;
+        p.exhaust_resonance_Qs[2]    = 2.0f;
+        p.exhaust_resonance_gains_db[2] = 3.0f;
+        p.num_exhaust_resonances = 3;
+        p.exhaust_lowpass_freq = 2500.0f;   // moderate roll-off, I4 is raspier
+        p.exhaust_lowpass_Q    = 0.707f;
         p.intake_resonance_freq  = 500.0f;
         p.intake_resonance_Q     = 2.5f;
 
@@ -49,6 +59,17 @@ const EnginePreset& get_preset_i4() {
         p.exhaust_noise_level      = 0.10f;
         p.exhaust_noise_center_freq = 1800.0f;
         p.exhaust_noise_bandwidth   = 1500.0f;
+
+        // Combustion waveform: I4 has sharp, buzzy character
+        p.impulse_duration          = 0.008f;   // 8ms — standard for I4
+        p.impulse_decay             = 300.0f;
+        p.combustion_attack_sharpness = 25.0f;
+        p.combustion_ring_freq        = 500.0f;
+        p.combustion_ring_amount      = 0.35f;
+
+        // Combustion jitter
+        p.combustion_jitter = 0.10f;
+        p.timing_jitter     = 0.0003f;
 
         return p;
     }();

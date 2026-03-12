@@ -47,6 +47,7 @@ core_sources = files(
   'src/synth/harmonic_synth.cpp',
   'src/synth/noise_generator.cpp',
   'src/synth/sample_player.cpp',
+  'src/synth/turbo_whistle.cpp',
   'src/effects/biquad_filter.cpp',
   'src/effects/distortion.cpp',
   'src/effects/reverb.cpp',

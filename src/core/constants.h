@@ -12,6 +12,7 @@ inline constexpr int    MAX_HARMONICS = 32;
 inline constexpr int    MAX_VOICES    = 16;
 inline constexpr int    MAX_MIXER_CHANNELS = 8;
 inline constexpr int    MAX_EFFECTS   = 8;
+inline constexpr int    MAX_EXHAUST_RESONANCES = 3;
 inline constexpr uint32_t DEFAULT_SAMPLE_RATE   = 48000;
 inline constexpr uint32_t DEFAULT_BUFFER_FRAMES = 512;
 inline constexpr int    TRIGGER_QUEUE_SIZE = 64;

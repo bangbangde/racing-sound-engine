@@ -24,9 +24,13 @@ struct EnginePreset {
     float harmonic_amplitudes[MAX_HARMONICS] = {};
     int   num_harmonics = 0;
 
-    // Filter params
-    float exhaust_resonance_freq = 200.0f;
-    float exhaust_resonance_Q    = 1.5f;
+    // Filter params — exhaust resonant filter bank (Peak filters in series)
+    int   num_exhaust_resonances = 1;
+    float exhaust_resonance_freqs[MAX_EXHAUST_RESONANCES]    = {200.0f, 0.0f, 0.0f};
+    float exhaust_resonance_Qs[MAX_EXHAUST_RESONANCES]       = {1.5f, 0.0f, 0.0f};
+    float exhaust_resonance_gains_db[MAX_EXHAUST_RESONANCES] = {12.0f, 0.0f, 0.0f};
+    float exhaust_lowpass_freq = 2500.0f;  // high-freq roll-off after resonances (Hz)
+    float exhaust_lowpass_Q    = 0.707f;   // Butterworth Q for smooth roll-off
     float intake_resonance_freq  = 400.0f;
     float intake_resonance_Q     = 2.0f;
 
@@ -44,6 +48,23 @@ struct EnginePreset {
     float exhaust_noise_level      = 0.08f;
     float exhaust_noise_center_freq = 1500.0f;
     float exhaust_noise_bandwidth   = 1500.0f;
+
+    // Combustion waveform shaping
+    float impulse_duration          = 0.008f;   // base impulse duration (seconds)
+    float impulse_decay             = 300.0f;    // base impulse decay rate
+    float combustion_attack_sharpness = 20.0f;   // attack speed factor
+    float combustion_ring_freq        = 400.0f;  // decay oscillation Hz
+    float combustion_ring_amount      = 0.3f;    // decay oscillation mix
+
+    // Combustion cycle-to-cycle variation
+    float combustion_jitter = 0.12f;   // amplitude jitter range (±)
+    float timing_jitter     = 0.0004f; // max timing offset (seconds)
+
+    // Turbo whistle params
+    float turbo_base_freq     = 2000.0f;
+    float turbo_freq_range    = 5000.0f;
+    float turbo_noise_mix     = 0.3f;
+    float turbo_max_amplitude = 0.08f;
 };
 
 // Preset factory functions

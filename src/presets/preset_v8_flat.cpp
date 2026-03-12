@@ -37,9 +37,19 @@ const EnginePreset& get_preset_v8_flat() {
             p.harmonic_amplitudes[i] = harmonics[i];
         }
 
-        // Sharper, higher resonance
-        p.exhaust_resonance_freq = 350.0f;
-        p.exhaust_resonance_Q    = 2.0f;
+        // Sharper, higher resonance — resonant filter bank
+        p.exhaust_resonance_freqs[0] = 350.0f;
+        p.exhaust_resonance_Qs[0]    = 4.0f;
+        p.exhaust_resonance_gains_db[0] = 10.0f;
+        p.exhaust_resonance_freqs[1] = 700.0f;
+        p.exhaust_resonance_Qs[1]    = 3.0f;
+        p.exhaust_resonance_gains_db[1] = 8.0f;
+        p.exhaust_resonance_freqs[2] = 1200.0f;
+        p.exhaust_resonance_Qs[2]    = 2.0f;
+        p.exhaust_resonance_gains_db[2] = 4.0f;
+        p.num_exhaust_resonances = 3;
+        p.exhaust_lowpass_freq = 3500.0f;   // higher roll-off, flat-plane is screamy
+        p.exhaust_lowpass_Q    = 0.707f;
         p.intake_resonance_freq  = 600.0f;
         p.intake_resonance_Q     = 3.0f;
 
@@ -55,6 +65,17 @@ const EnginePreset& get_preset_v8_flat() {
         p.exhaust_noise_level      = 0.06f;
         p.exhaust_noise_center_freq = 2000.0f;
         p.exhaust_noise_bandwidth   = 1800.0f;
+
+        // Combustion waveform: flat-plane has sharp, aggressive character
+        p.impulse_duration          = 0.006f;   // 6ms — short for sharp, screamy character
+        p.impulse_decay             = 400.0f;   // fast decay for tight response
+        p.combustion_attack_sharpness = 30.0f;
+        p.combustion_ring_freq        = 600.0f;
+        p.combustion_ring_amount      = 0.40f;
+
+        // Combustion jitter — tighter for flat-plane precision
+        p.combustion_jitter = 0.08f;
+        p.timing_jitter     = 0.0002f;
 
         return p;
     }();

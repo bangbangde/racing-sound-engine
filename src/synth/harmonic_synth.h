@@ -11,10 +11,11 @@ public:
 
     void set_harmonic_profile(const float* amplitudes, int count);
 
-    // Additive synthesis: generate harmonics of fundamental_freq, modulated by load.
+    // Additive synthesis: generate harmonics of fundamental_freq, modulated by load and RPM.
+    // rpm_normalized: 0.0 (idle) to 1.0 (redline), controls high-frequency brightness.
     // Output is additive (accumulated into output buffer).
     void process(Sample* output, FrameCount frames, float fundamental_freq,
-                 float load, SampleRate sample_rate);
+                 float load, float rpm_normalized, SampleRate sample_rate);
 
     void reset();
 

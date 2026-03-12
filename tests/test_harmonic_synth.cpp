@@ -14,7 +14,7 @@ void test_produces_output() {
     constexpr FrameCount frames = 2048;
     Sample buffer[frames] = {};
 
-    synth.process(buffer, frames, 440.0f, 0.5f, 48000);
+    synth.process(buffer, frames, 440.0f, 0.5f, 0.5f, 48000);
 
     float max_val = 0.0f;
     for (FrameCount i = 0; i < frames; ++i) {
@@ -36,10 +36,10 @@ void test_load_modulates_harmonics() {
     Sample buf_high[frames] = {};
 
     synth.reset();
-    synth.process(buf_low, frames, 200.0f, 0.1f, 48000);
+    synth.process(buf_low, frames, 200.0f, 0.1f, 0.5f, 48000);
 
     synth.reset();
-    synth.process(buf_high, frames, 200.0f, 1.0f, 48000);
+    synth.process(buf_high, frames, 200.0f, 1.0f, 0.5f, 48000);
 
     float rms_low = 0.0f, rms_high = 0.0f;
     for (FrameCount i = 0; i < frames; ++i) {
@@ -59,7 +59,7 @@ void test_zero_harmonics_silent() {
     constexpr FrameCount frames = 512;
     Sample buffer[frames] = {};
 
-    synth.process(buffer, frames, 440.0f, 0.5f, 48000);
+    synth.process(buffer, frames, 440.0f, 0.5f, 0.5f, 48000);
 
     float max_val = 0.0f;
     for (FrameCount i = 0; i < frames; ++i) {

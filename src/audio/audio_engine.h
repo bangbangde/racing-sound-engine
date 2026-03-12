@@ -8,6 +8,7 @@
 #include "synth/harmonic_synth.h"
 #include "synth/noise_generator.h"
 #include "synth/sample_player.h"
+#include "synth/turbo_whistle.h"
 #include "effects/biquad_filter.h"
 #include "effects/distortion.h"
 #include "effects/reverb.h"
@@ -62,7 +63,10 @@ private:
     NoiseGenerator        intake_noise_;
     NoiseGenerator        exhaust_noise_;
     SamplePlayer          sample_player_;
-    BiquadFilter          exhaust_filter_;
+    TurboWhistle          turbo_whistle_;
+    BiquadFilter          exhaust_resonances_[MAX_EXHAUST_RESONANCES];
+    int                   num_exhaust_resonances_ = 1;
+    BiquadFilter          exhaust_lowpass_;       // high-freq roll-off after resonances
     BiquadFilter          intake_filter_;
     Distortion            distortion_;
     SimpleReverb          reverb_;
@@ -79,6 +83,7 @@ private:
     Sample scratch_intake_noise_[MAX_SCRATCH] = {};
     Sample scratch_exhaust_noise_[MAX_SCRATCH] = {};
     Sample scratch_samples_[MAX_SCRATCH] = {};
+    Sample scratch_turbo_[MAX_SCRATCH] = {};
 
     // The audio processing callback
     void process_audio(Sample* output, FrameCount frames);
