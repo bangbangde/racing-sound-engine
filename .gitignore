@@ -1,0 +1,55 @@
+# 构建输出
+/builddir/
+/build/
+/out/
+/cmake-build-*/
+
+# 编译产物
+*.exe
+*.dll
+*.lib
+*.a
+*.so
+*.dylib
+*.o
+*.obj
+*.pch
+*.gch
+
+# 调试符号
+*.pdb
+*.ilk
+*.exp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Meson
+meson-logs/
+meson-private/
+.mesonpy-native-file.ini
+
+# Windows 系统文件
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 其他
+nul
+NUL
+*.log
+.cache
