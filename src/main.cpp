@@ -211,13 +211,22 @@ int main() {
         params.clutch        = engine.get_clutch();
         params.turbo_enabled = turbo;
         params.preset_id     = current_preset;
+        params.shift_phase   = engine.get_shift_phase();
         audio.set_params(params);
 
         // Display status
         clear_line();
-        std::printf("\r RPM: %5.0f | Gear: %s | Throttle: %3.0f%% | Load: %.2f | Turbo: %s | Preset: %s  ",
+        const char* shift_indicator = "";
+        switch (engine.get_shift_phase()) {
+            case engin::ShiftPhase::ClutchDisengage: shift_indicator = " [CLUTCH]"; break;
+            case engin::ShiftPhase::GearChange:      shift_indicator = " [SHIFT]";  break;
+            case engin::ShiftPhase::ClutchEngage:    shift_indicator = " [ENGAGE]"; break;
+            default: break;
+        }
+        std::printf("\r RPM: %5.0f | Gear: %s%s | Throttle: %3.0f%% | Load: %.2f | Turbo: %s | Preset: %s  ",
                     engine.get_rpm(),
                     gear == 0 ? "N" : std::to_string(gear).c_str(),
+                    shift_indicator,
                     engine.get_throttle() * 100.0f,
                     engine.get_load(),
                     turbo ? "ON" : "OFF",

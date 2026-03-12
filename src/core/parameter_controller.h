@@ -13,6 +13,7 @@ struct EngineParams {
     float clutch     = 1.0f;    // 0=disengaged, 1=engaged
     bool  turbo_enabled = false;
     int   preset_id  = 0;
+    ShiftPhase shift_phase = ShiftPhase::Idle;
 };
 
 // Triple-buffer lock-free parameter bridge.
