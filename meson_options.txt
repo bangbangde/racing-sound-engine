@@ -1,4 +1,3 @@
 option('sample_rate', type : 'integer', value : 48000, description : 'Audio sample rate in Hz')
 option('buffer_frames', type : 'integer', value : 512, description : 'Audio buffer size in frames')
 option('build_demo', type : 'boolean', value : true, description : 'Build demo application')
-option('build_tests', type : 'boolean', value : true, description : 'Build unit tests')

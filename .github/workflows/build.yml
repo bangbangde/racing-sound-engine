@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: racing-sound-engine-windows
-          path: build/racing-sound-engine-demo.exe
+          path: build/demo/racing-sound-engine-demo.exe
 
   build-macos:
     runs-on: macos-latest
@@ -57,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: racing-sound-engine-macos
-          path: build/racing-sound-engine-demo
+          path: build/demo/racing-sound-engine-demo
 
   build-linux:
     runs-on: ubuntu-latest
@@ -87,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: racing-sound-engine-linux
-          path: build/racing-sound-engine-demo
+          path: build/demo/racing-sound-engine-demo
 
   release:
     needs: [build-windows, build-macos, build-linux]
